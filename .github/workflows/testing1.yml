@@ -1,0 +1,25 @@
+docker-build-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Create a Dockerfile
+        run: |
+          cat > Dockerfile << 'EOF'
+          FROM alpine:latest
+          RUN apk add --no-cache curl
+          CMD ["curl", "https://example.com"]
+          EOF
+      
+      - name: Build Docker image
+        run: |
+          docker build -t my-test-image .
+          docker images | grep my-test-image
+      
+      - name: Run the built image
+        run: |
+          docker run --rm my-test-image
+          echo "✅ Docker build and run successful!"
+  
