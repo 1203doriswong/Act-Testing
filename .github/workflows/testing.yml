@@ -1,0 +1,30 @@
+# 创建测试目录
+mkdir act-demo && cd act-demo
+
+# 初始化 git
+git init
+
+# 创建 GitHub Actions 文件夹
+mkdir -p .github/workflows
+
+# 创建一个简单的工作流文件
+cat > .github/workflows/test.yml << 'EOF'
+name: Test Local
+on: [push]
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Say Hello
+        run: echo "Hello from act!"
+      
+      - name: Show current time
+        run: date
+      
+      - name: List files
+        run: ls -la
+EOF
